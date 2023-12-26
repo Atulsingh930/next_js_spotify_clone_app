@@ -2,26 +2,189 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.root{
+  --background-noise: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDov…sdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=");
+  --background-base: #121212;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+html, body{
+    height: 100%;
+    background-color: black;
+    color-scheme: dark;
+    position: relative;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    position: relative;
+  }
+.loader::after,
+.loader::before {
+    content: '';  
+    box-sizing: border-box;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #1ed760;
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: animloader 2s linear infinite;
+  }
+  .loader::after {
+    animation-delay: 1s;
+  }
+  
+  @keyframes animloader {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
+
+
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(50, 54, 59, 0.5);
+  }
+  
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+        90deg,
+        rgba(50, 54, 59, 0) 0,
+        rgba(50, 54, 59, 0.2) 20%,
+        rgba(50, 54, 59, 0.5) 60%,
+        rgba(50, 54, 59, 0)
+    );
+    animation: shimmer 2s infinite;
+  }
+  
+  @keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+  }
+  }
+
+  .CoLO4pdSl8LGWyVZA00t {
+    background-image: linear-gradient(rgba(0,0,0,.6) 0,var(--background-base) 100%),var(--background-noise);
+    height: 246px;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+    filter: drop-shadow(100%);
+}
+.element:sticky {
+  background-color: red; /* change the background color when position:sticky is triggered */
+}
+
+.xYgjMpAjE5XT05aRIezb {
+  background: linear-gradient(transparent 0,rgba(0,0,0,.5) 100%),var(--background-noise);
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: var(--red);
+  transform-origin: 0%;
+}
+
+@keyframes colorChange {
+  0% {
+      background-color: transparent;
+  }
+  100% {
+      background-color: rgb(64, 72, 88);
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@keyframes reverseColorChange {
+  0% {
+      background-color: rgb(64, 72, 88);
+  }
+  100% {
+      background-color: transparent;
+  }
+}
+
+@keyframes disappear {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Define the animation to make the text appear */
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Apply the animation to the text element */
+.disappear {
+  animation: disappear 0.25s forwards;
+}
+
+.appear {
+  animation: appear 0.25s backwards;
+}
+.animate-colorChange {
+  animation: colorChange 0.25s forwards ease;
+}
+.animate-reversecolorChange {
+  animation: reverseColorChange 0.25s backwards ease;
+}
+
+.hidden_scrollbar {
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+.hidden_scrollbar::-webkit-scrollbar { /* WebKit */
+  width: 0;
+  height: 0;
+}
+
+::-webkit-scrollbar {
+  border-radius: 200px;
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #000814;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 200px;
+  height: 20px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
