@@ -198,3 +198,16 @@ export async function handleSignOut(dispatch) {
         //console.error(error);
     }
 }
+
+export async function handleChangeUserImage(dispatch, image, signUpData) {
+    try {
+        dispatch(setSignUpDetails(
+            {
+                ...signUpData,
+                profileUrl : image
+            }
+        ));
+    } catch (error) {
+        console.error(error);
+    }
+}

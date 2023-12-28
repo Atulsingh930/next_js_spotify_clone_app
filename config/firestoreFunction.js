@@ -1,9 +1,8 @@
 "use client"
 
 
-import { arrayRemove, arrayUnion, collection, doc, getDoc, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { arrayRemove, arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firbase";
-import toast from "react-hot-toast";
 
 export async function addUserData (data, userID) {
     //console.log(data, userID)
@@ -23,24 +22,6 @@ export async function addUserData (data, userID) {
         }, {merge : true});
         //console.log("Document written with ID: ", docRef.id);
         return docRef
-      } catch (e) {
-        //console.error("Error adding document: ", e);
-        return null
-      }
-}
-
-export async function addUserDataInFirestore(user){ 
-    //console.log(user.userID)
-    try {
-        const docRef = await setDoc(doc(db, "users", user.userID), {
-          first: user.displayName.split(' ')[0],
-          last: user.displayName.split(' ')[1],
-          age: '',
-          email : user.email,
-          gender : '',
-        });
-        //console.log("Document written with ID: ", docRef.id);
-        return docRef;
       } catch (e) {
         //console.error("Error adding document: ", e);
         return null
@@ -71,7 +52,7 @@ export async function addLikedSongs(userID, songID) {
             likedSongs: arrayUnion(songID),
         });
     } catch (error) {
-        //console.error(error);
+        console.error(error);
     }
 }
 
@@ -82,7 +63,7 @@ export async function removeLikedSongs(userID, songID) {
             likedSongs: arrayRemove(songID),
         });
     } catch (error) {
-        //console.error(error);
+        console.error(error);
         return null;
     }
 }
@@ -100,7 +81,7 @@ export async function addLikedPlaylist(userID, playlist) {
           ),
       });
   } catch (error) {
-      //console.error(error);
+      console.error(error);
   }
 }
 
@@ -117,11 +98,10 @@ export async function removeLikedPlaylist(userID, playlist) {
           ),
       });
   } catch (error) {
-      //console.error(error);
+      console.error(error);
       return null;
   }
 }
-
 
 export async function addArtistFollow(userID, artist) {
   try {
@@ -136,7 +116,7 @@ export async function addArtistFollow(userID, artist) {
           ),
       });
   } catch (error) {
-      //console.error(error);
+      console.error(error);
   }
 }
 
@@ -153,11 +133,10 @@ export async function removeArtistFollow(userID, artist) {
           ),
       });
   } catch (error) {
-      //console.error(error);
+      console.error(error);
       return null;
   }
 }
-
 
 export async function addLikedAlbums(userID, albums) {
   try {
@@ -173,7 +152,7 @@ export async function addLikedAlbums(userID, albums) {
           ),
       });
   } catch (error) {
-      //console.error(error);
+      console.error(error);
   }
 }
 
@@ -191,7 +170,18 @@ export async function removeLikedAlbums(userID, albums) {
           ),
       });
   } catch (error) {
-      //console.error(error);
+      console.error(error);
       return null;
+  }
+}
+
+export async function updateUserImage(userID, data) {
+  try {
+      //console.log(userID, data);
+        await updateDoc(doc(db, "users", userID), {
+            profileUrl : data
+        });
+  } catch (error) {
+        console.error(error);
   }
 }

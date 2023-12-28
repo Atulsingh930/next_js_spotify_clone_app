@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 import { auth, db } from "./firbase";
 import { addUserData, getUserData } from "./firestoreFunction";
 import toast from "react-hot-toast";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { setSignUpDetails } from "@/ReduxSlices/authenticationSlice";
 
 export async function userSignUp (userDetails) {
@@ -49,3 +49,20 @@ export async function updateUserProfile (userDetails) {
     }return result
 }
 
+export async function handleUpdateUserName(userName, signUpData, dispatch) {
+    await updateProfile(auth.currentUser, {
+        displayName: userName
+    })
+    const result = await updateDoc(doc(db, "users", signUpData.email), {
+        first: userName.split(' ')[0],
+        last: userName.split(' ')[1],
+    });
+
+    dispatch(setSignUpDetails(
+        {
+            ...signUpData,
+            first: userName.split(' ')[0],
+            last: userName.split(' ')[1],
+        }
+    ));
+}
